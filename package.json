@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "bin": {
-    "jk": "./bin/index.js"
+    "jk": "./dist/bin/index.js"
   },
   "scripts": {
     "dev": "ts-node-dev --respawn bin/index.ts",

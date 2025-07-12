@@ -15,3 +15,4 @@ export const makeFolder = (targetPath: string) => {
 export const write = (filepath: string, content: string) => {
   writeFileSync(filepath, content, { encoding: 'utf8' });
 };
+
