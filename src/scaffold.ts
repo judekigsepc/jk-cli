@@ -1,6 +1,7 @@
 import path from 'path';
-import { makeFolder, run, write } from './utils.js';
+import { makeFolder, run, write, copyUtils,copyConfigs } from './utils.js';
 import { readFileSync } from 'fs';
+
 
 export const scaffoldProject = (projectName: string) => {
   const root = path.join(process.cwd(), projectName);
@@ -13,13 +14,18 @@ export const scaffoldProject = (projectName: string) => {
     'src/modules',
     'src/middleware',
     'src/utils',
+    'src/configs',
     'src/types',
   ];
 
   folders.forEach(f => makeFolder(path.join(root, f)));
 
+  copyUtils(root)
+  copyConfigs(root)
+ 
   console.log("📦 Initializing package.json...");
   run('npm init -y', root);
+
 
 // Installing project dependecies 
   console.log("📥 Installing dependencies...");
@@ -48,28 +54,34 @@ write(packageJsonPath, JSON.stringify(packageData, null, 2));
   // Writing tsconfig.json
   console.log("📄 Writing config files...");
   write(path.join(root, 'tsconfig.json'), `{
-    "compilerOptions": {
-      "target": "ES6", // Specifies ECMAScript target version
-      "module": "NodeNext", // Module system to use
-      "strict": true, // Enable all strict type-checking options
-      "outDir": "./dist", // Output directory for compiled files
-      "rootDir": "./src", // Root directory of TypeScript source files
-      "esModuleInterop": true, // Enables interoperability between CommonJS and ES Modules
-      "forceConsistentCasingInFileNames": true, // Disallows inconsistencies in filename casing
-      "skipLibCheck": true // Skips type checking of declaration files
-    },
-    "include": ["src"], // Files to include in compilation
-    "exclude": ["node_modules", "dist"] // Files to exclude from compilation
-  }`);
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true, // ⬅ disables JS output (you're using tsx anyway)
+    "esModuleInterop": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src"]
+}
+`);
 
-  // .env
+  // Creating environment variable file
 console.log("📄 Creating .env file...");
-write(path.join(root, '.env'), ``);
+write(path.join(root, '.env'), `
+PORT= 3000
+DB_URI= "change_me"
+JWT_SECRET= change_me_later
+NODE_ENV= development
+`);
 
 
   // Initialising git for the project
   console.log("🔧 Initializing Git repo...");
-run('git init', root);
+  run('git init', root);
 
 // Creating a .gitignore file
 console.log("🧾 Adding .gitignore...");
@@ -83,21 +95,43 @@ dist
 `);
 
 // Creating app.ts for the project
-  write(path.join(root, 'src', 'app.ts'), `import express from 'express';
+  write(path.join(root, 'src', 'app.ts'), `
+  
+  import express from 'express';
+  import cors from 'cors';
+  import cookieParser from 'cookie-parser';
+  import connectToDB from './configs/db.ts'
+  import checkEnvVars from './utils/checkEnv.ts'
 
 const app = express();
 
+app.use(cors({
+origin: "*",
+credentials: true
+}))
+
 app.use(express.json());
+app.use(cookieParser())
+
+const envVars = ["PORT","DB_URI","JWT_SECRET"]
+
+checkEnvVars(envVars)
 
 const port = process.env.PORT || 3000
+const dbURL = process.env.DB_URI as string
 
-app.get('/', (req, res) => {
-  res.send('Hello from JK CLI Scaffold! at port \${port}\');
-});
+connectToDB(dbURL)
 
 app.listen(port, () => {
- console.log(\`Server running on port \${port}\`)})
-`);
+ console.log(\`Server running on port \${port}\`)
+})
+
+app.get('/', (req, res) => {
+res.send('Server up and running')
+})
+`
+)
+;
 
   console.log(`
     \n✅ Done! Your project '${projectName}' is ready. Run the following commands;-\n 

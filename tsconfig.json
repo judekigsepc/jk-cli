@@ -9,5 +9,6 @@
     "resolveJsonModule": true,
     "strict": true
   },
-  "include": ["src", "bin"]
+  "include": ["src", "bin"],
+  "exclude": ["templates"]
 }

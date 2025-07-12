@@ -9,7 +9,10 @@
     "dev": "ts-node-dev --respawn bin/index.ts",
     "build": "tsc"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "fs-extra": "^11.3.0"
+  },
   "devDependencies": {
     "@types/node": "^20.0.0",
     "ts-node-dev": "^2.0.0",
