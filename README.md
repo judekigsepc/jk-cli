@@ -1,7 +1,7 @@
 
 # 🛠️ jk-cli
 
-`jk-cli` is a lightweight custom scaffolding tool built to jumpstart fullstack Node.js + Express + TypeScript projects — tailored to your own workflow and patterns.
+`jk-cli` is a lightweight custom scaffolding tool built to jumpstart fullstack Node.js + Express + MongoDB + TypeScript projects  — tailored to your own workflow and patterns.
 
 It scaffolds boilerplate code, installs dependencies, sets up your folder structure, and includes reusable utilities like validation, error handlers, and auth — all the things you repeat across projects.
 
@@ -53,7 +53,7 @@ npm run dev
 
 ---
 
-## 🔧 Technologies Used
+## 🔧 Technologies Used (or packages included)
 
 * TypeScript
 * Express.js
@@ -61,6 +61,7 @@ npm run dev
 * Mongoose
 * Multer
 * Dotenv
+* Cookie parser
 
 ---
 
