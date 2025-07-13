@@ -1,6 +1,6 @@
 import { Request } from "express";
 import { ZodError, ZodSchema } from "zod";
-import { validationSchemaMap, ValidationTypes } from "../schemas/schemaRegistry.js";
+import { validationSchemaMap, ValidationTypes } from "./schemaRegistry.ts";
 
 export const validateRequestBody = (
   validationType: "creation" | "update",
@@ -18,7 +18,7 @@ export const validateRequestBody = (
     schema.parse(req.body);
   } catch (err) {
     if (err instanceof ZodError) {
-      const message = err.errors
+      const message = (err as ZodError).errors
         .map((e) => `${e.path.join(".")}: ${e.message}`)
         .join(", ");
 

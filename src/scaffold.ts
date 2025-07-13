@@ -1,6 +1,7 @@
 import path from 'path';
 import { makeFolder, run, write, copyUtils,copyConfigs } from './utils.js';
 import { readFileSync } from 'fs';
+import chalk from 'chalk';
 
 
 export const scaffoldProject = (projectName: string) => {
@@ -133,9 +134,14 @@ res.send('Server up and running')
 )
 ;
 
-  console.log(`
-    \n✅ Done! Your project '${projectName}' is ready. Run the following commands;-\n 
-    \n cd '${projectName}'\n
-    \n npm run dev \n
-    `);
+ console.log(`
+${chalk.greenBright("✅ Success!")} Your project ${chalk.yellow(`'${projectName}'`)} is ready.
+
+${chalk.cyan("📂 Next steps:")}
+  ${chalk.magenta("1.")} ${chalk.whiteBright(`cd ${projectName}`)}
+  ${chalk.magenta("2.")} ${chalk.whiteBright("npm run dev")}
+
+${chalk.redBright("⚠️  Important:")} Don't forget to update your ${chalk.bold(".env")} file.
+  At the very least, set your ${chalk.bold("DB_URI")} or the server will not start.
+`);;
 };
