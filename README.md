@@ -21,7 +21,7 @@ It scaffolds boilerplate code, installs dependencies, sets up your folder struct
 
 ## 📦 How to Use
 
-1. Install globally (after cloning and building):
+1. Install globally (after cloning and building(npm run build & npm link) ):
 
 ```bash
 npm install -g .
