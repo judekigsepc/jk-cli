@@ -1,7 +1,9 @@
 import { Response } from "express";
 
+type ValidErrorStatuses = 404 | 400 | 500 | 403 | 401 
+
 export const sendError = (
-  status: number,
+  status: ValidErrorStatuses,
   message: string,
   error: unknown,
   res: Response

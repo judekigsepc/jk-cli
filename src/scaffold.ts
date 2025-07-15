@@ -14,6 +14,7 @@ export const scaffoldProject = (projectName: string) => {
     'src',
     'src/modules',
     'src/middleware',
+    'src/public',
     'src/utils',
     'src/configs',
     'src/types',
@@ -51,20 +52,19 @@ packageData.scripts = {
 write(packageJsonPath, JSON.stringify(packageData, null, 2));
 
 
-
   // Writing tsconfig.json
-  console.log("📄 Writing config files...");
+  console.log("📄 Writing typescript config file...");
   write(path.join(root, 'tsconfig.json'), `{
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "noEmit": true, // ⬅ disables JS output (you're using tsx anyway)
+    "target": "ES2020",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "outDir": "dist",
+    "rootDir": "src",
     "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
   },
   "include": ["src"]
 }
@@ -101,8 +101,8 @@ dist
   import express from 'express';
   import cors from 'cors';
   import cookieParser from 'cookie-parser';
-  import connectToDB from './configs/db.ts'
-  import checkEnvVars from './utils/checkEnv.ts'
+  import connectToDB from './configs/db'
+  import checkEnvVars from './utils/checkEnv'
 
 const app = express();
 
@@ -115,12 +115,13 @@ app.use(express.json());
 app.use(cookieParser())
 
 const envVars = ["PORT","DB_URI","JWT_SECRET"]
-
+// Checking for presence of all env variables
 checkEnvVars(envVars)
 
 const port = process.env.PORT || 3000
 const dbURL = process.env.DB_URI as string
 
+//Connecting to database
 connectToDB(dbURL)
 
 app.listen(port, () => {
