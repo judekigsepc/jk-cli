@@ -98,6 +98,12 @@ dist
 .DS_Store
 `);
 
+  // Creating a README file
+console.log("🧾 Adding README.md...");
+write(path.join(root, 'README.md'), `
+${projectName} scaffolded by JK SCAFFOLDER
+`);
+
 // Creating app.ts for the project
   write(path.join(root, 'src', 'app.ts'), `
   
