@@ -1,6 +1,6 @@
 import { Request } from "express";
 import { ZodError, ZodSchema } from "zod";
-import { validationSchemaMap, ValidationTypes } from "./schemaRegistry.ts";
+import { validationSchemaMap, ValidationTypes } from "./schemaRegistry";
 
 export const validateRequestBody = (
   validationType: "creation" | "update",
@@ -12,21 +12,21 @@ export const validateRequestBody = (
 
     const schema: ZodSchema =
       validationType === "creation"
-        ? baseSchema
+        ? baseSchema.strip()
         : baseSchema.partial().optional();
 
     schema.parse(req.body);
   } catch (err) {
-    if (err instanceof ZodError) {
-      const message = (err as ZodError).errors
-        .map((e) => `${e.path.join(".")}: ${e.message}`)
-        .join(", ");
+  if (err instanceof ZodError) {
+    const formatted = err.issues.map((issue) => {
+      const path = issue.path.join('.');
+      return `→ ${path || 'root'}: ${issue.message}`;
+    }).join('\n');
 
-      throw new Error(`Validation failed: ${message}`);
-    }
-
-    throw new Error(
-      `Unknown error during ${whatToValidate} validation. Please check your values.`
-    );
+    throw new Error(`Validation failed:\n${formatted}`);
   }
-};
+
+  throw new Error(
+    `Unknown error during ${whatToValidate} validation. Please check your values.`
+  );
+  }}
