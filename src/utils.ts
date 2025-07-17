@@ -48,6 +48,25 @@ export const copyConfigs = (root: string) => {
  copyTemplates(templatePath, targetPath);
 }
 
+export const copyModules = (root: string) => {
+   console.log(" ⚙️ Adding a few modules like auth...");
+
+  const templatePath = path.resolve(__dirname, "../../templates/modules");
+  const targetPath = path.join(root, "src/modules");
+
+ copyTemplates(templatePath, targetPath);
+}
+
+export const copyTypes = (root: string) => {
+   console.log(" ⚙️ Adding a few types to kick start your project...");
+
+  const templatePath = path.resolve(__dirname, "../../templates/types");
+  const targetPath = path.join(root, "src/types");
+
+ copyTemplates(templatePath, targetPath);
+}
+
+
 
 
 

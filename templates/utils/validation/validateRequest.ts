@@ -12,7 +12,7 @@ export const validateRequestBody = (
 
     const schema: ZodSchema =
       validationType === "creation"
-        ? baseSchema
+        ? baseSchema.strip()
         : baseSchema.partial().optional();
 
     schema.parse(req.body);

@@ -1,5 +1,5 @@
 import path from 'path';
-import { makeFolder, run, write, copyUtils,copyConfigs } from './utils.js';
+import { makeFolder, run, write, copyUtils,copyConfigs, copyModules, copyTypes } from './utils.js';
 import { readFileSync } from 'fs';
 import chalk from 'chalk';
 
@@ -14,16 +14,18 @@ export const scaffoldProject = (projectName: string) => {
     'src',
     'src/modules',
     'src/middleware',
-    'src/public',
     'src/utils',
     'src/configs',
     'src/types',
+    'src/public',
   ];
 
   folders.forEach(f => makeFolder(path.join(root, f)));
 
   copyUtils(root)
   copyConfigs(root)
+  copyModules(root)
+  copyTypes(root)
  
   console.log("📦 Initializing package.json...");
   run('npm init -y', root);
@@ -64,7 +66,7 @@ write(packageJsonPath, JSON.stringify(packageData, null, 2));
     "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true,
+    "resolveJsonModule": true
   },
   "include": ["src"]
 }
@@ -95,14 +97,20 @@ dist
 .DS_Store
 `);
 
+  // Creating a README file
+console.log("🧾 Adding README.md...");
+write(path.join(root, 'README.md'), `
+${projectName} scaffolded by JK SCAFFOLDER
+`);
+
 // Creating app.ts for the project
   write(path.join(root, 'src', 'app.ts'), `
   
-  import express from 'express';
+    import express, { Request, Response } from 'express';
   import cors from 'cors';
   import cookieParser from 'cookie-parser';
-  import connectToDB from './configs/db'
-  import checkEnvVars from './utils/checkEnv'
+  import connectToDB from './configs/db.ts'
+  import checkEnvVars from './utils/checkEnv.ts'
 
 const app = express();
 
@@ -128,9 +136,12 @@ app.listen(port, () => {
  console.log(\`Server running on port \${port}\`)
 })
 
-app.get('/', (req, res) => {
+app.get('/', (req:Request, res:Response) => {
 res.send('Server up and running')
 })
+
+app.use('/api/auth', authRouter)
+
 `
 )
 ;
