@@ -133,7 +133,7 @@ dist
   // Creating a README file
 console.log("🧾 Adding README.md...");
 write(path.join(root, 'README.md'), `
-${projectName} scaffolded by JK SCAFFOLDER
+**WELCOME TO ${projectName} PROJECT, SCAFFOLDED BY JK-CLI**
 `);
 
 // Creating app.ts for the project
