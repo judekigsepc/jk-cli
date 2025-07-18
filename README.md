@@ -47,7 +47,7 @@ npm run dev
 * `src/app.ts` (entry point)
 * `src/configs/` (MongoDB, CORS, cookie setup)
 * `src/utils/` (error & result handlers, Zod validators)
-* `src/middlewares/`
+* `src/public/`
 * `src/modules/auth/` (starter login/register logic)
 * `.env` file with default `PORT` and `DB_URI`
 
