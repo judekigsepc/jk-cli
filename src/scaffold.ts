@@ -33,7 +33,7 @@ export const scaffoldProject = (projectName: string) => {
 // Installing project dependecies 
   console.log("📥 Installing dependencies...");
   run('npm install express mongoose zod multer jsonwebtoken bcrypt cookie-parser cors', root);
-  run('npm install -D typescript ts-node-dev @types/node @types/express @types/bcrypt @types/cookie-parser @types/cors @types/multer @types/mongoose @types/jsonwebtoken ', root);
+  run('npm install -D typescript ts-node-dev tsconfig-paths @types/node @types/express @types/bcrypt @types/cookie-parser @types/cors @types/multer @types/mongoose @types/jsonwebtoken ', root);
 
 // INJECTING SCRIPTS INTO PACKAGE.JSON
   const packageJsonPath = path.join(root, 'package.json');
