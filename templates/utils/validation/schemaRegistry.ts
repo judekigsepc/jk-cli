@@ -1,5 +1,5 @@
 
-import { userLoginSchema, userSchema } from "@modules/auth/user.schema";
+import { userLoginSchema, userSchema } from "@modules/users/user.schema";
 
 export const validationSchemaMap = {
   "user" : userSchema,
