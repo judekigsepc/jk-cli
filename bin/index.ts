@@ -1,8 +1,6 @@
 #!/usr/bin/env node
 import { scaffoldProject } from '../src/scaffold.js';
-import { addAlias, removeAlias } from '../src/aliasManager.js';
 import { addModule, deleteModule } from '../src/moduleManager.js';
-import path from 'path';
 
 const args = process.argv.slice(2);
 
@@ -26,12 +24,10 @@ if (command === 'module') {
 
   if (isDelete) {
     deleteModule(name, root);
-    removeAlias(name, root);
     console.log(`🗑️  Deleted module '${name}' and removed alias '@${name}'`);
   } else {
     addModule(name, root);
-    addAlias(name, `modules/${name}`, root);
-    console.log(`✅ Created module '${name}' in /modules and added alias '@${name}'`);
+    console.log(`✅ Created module '${name}' in /modules'`);
   }
 } else {
   scaffoldProject(command);

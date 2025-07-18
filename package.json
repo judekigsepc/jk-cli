@@ -1,7 +1,6 @@
 {
   "name": "jk-cli",
   "version": "1.0.0",
-  "type": "module",
   "bin": {
     "jk": "./dist/bin/index.js"
   },

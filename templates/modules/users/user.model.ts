@@ -1,16 +1,13 @@
 import mongoose, { Document } from "mongoose";
-import { UserRoles } from "./types";
 
 interface IUser extends Document {
-    firstName:string,
-    lastName:string,
+    fullName:string,
     email: string,
     password: string,
-    role: UserRoles
 }
 
 const UserSchema = new mongoose.Schema<IUser>({
-    firstName: {
+    fullName: {
         type: String,
         required: true
     },

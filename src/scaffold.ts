@@ -13,7 +13,6 @@ export const scaffoldProject = (projectName: string) => {
   const folders = [
     'src',
     'src/modules',
-    'src/middleware',
     'src/utils',
     'src/configs',
     'src/types',
@@ -143,8 +142,10 @@ ${projectName} scaffolded by JK SCAFFOLDER
     import express, { Request, Response } from 'express';
   import cors from 'cors';
   import cookieParser from 'cookie-parser';
-  import connectToDB from '@configs/db.ts'
-  import checkEnvVars from '@utils/checkEnv.ts'
+  import connectToDB from '@configs/db'
+  import checkEnvVars from '@utils/checkEnv'
+
+  import authRouter from '@modules/auth/auth.route';
 
 const app = express();
 

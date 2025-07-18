@@ -11,12 +11,14 @@ export const addModule = (name:string, root:string) => {
 
   fs.mkdirSync(modulePath, { recursive: true });
 
-  const files = {
-    'controller.ts': `// ${name} controller`,
-    'service.ts': `// ${name} service`,
-    'routes.ts': `// ${name} routes`,
-    'model.ts': `// ${name} model`,
-  };
+ const files = {
+  [`${name}.controller.ts`]: `// ${name} controller`,
+  [`${name}.service.ts`]: `// ${name} service`,
+  [`${name}.route.ts`]: `// ${name} routes`,
+  [`${name}.model.ts`]: `// ${name} model`,
+  [`${name}.schema.ts`]: `// ${name} validation schema`,
+};
+
 
   Object.entries(files).forEach(([fileName, content]) => {
     write(path.join(modulePath, fileName), content);

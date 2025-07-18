@@ -1,9 +1,9 @@
 import {Request, Response} from 'express'
-import { validateRequestBody } from '../../utils/validation/validateRequest'
-import { sendError } from '../../utils/sendError'
+import { validateRequestBody } from '@utils/validation/validateRequest'
+import { sendError } from '@utils/sendError'
 import bcrypt from 'bcrypt'
 import User from '../users/user.model'
-import { sendSuccess } from '../../utils/sendSuccess'
+import { sendSuccess } from '@utils/sendSuccess'
 import jwt from 'jsonwebtoken'
 
 export const registerUser = async (req:Request, res: Response) => {

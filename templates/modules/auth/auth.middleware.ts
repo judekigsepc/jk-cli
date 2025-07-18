@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { sendError } from "../../utils/sendError";
+import { sendError } from "@utils/sendError";
 import jwt from "jsonwebtoken"
 import User from "../users/user.model";
 import { UserPayload } from "../users/types";
