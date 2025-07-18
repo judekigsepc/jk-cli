@@ -2,7 +2,7 @@ import {Request, Response} from 'express'
 import { validateRequestBody } from '../../utils/validation/validateRequest'
 import { sendError } from '../../utils/sendError'
 import bcrypt from 'bcrypt'
-import User from './user.model'
+import User from '../users/user.model'
 import { sendSuccess } from '../../utils/sendSuccess'
 import jwt from 'jsonwebtoken'
 

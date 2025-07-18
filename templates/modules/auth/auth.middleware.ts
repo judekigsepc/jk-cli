@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { sendError } from "../../utils/sendError";
 import jwt from "jsonwebtoken"
-import User from "./user.model";
-import { UserPayload } from "./types";
+import User from "../users/user.model";
+import { UserPayload } from "../users/types";
 
 export const authenticateUser = async (req: Request, res: Response, next: NextFunction) => {
     try {

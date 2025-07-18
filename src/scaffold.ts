@@ -66,11 +66,45 @@ write(packageJsonPath, JSON.stringify(packageData, null, 2));
     "esModuleInterop": true,
     "strict": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "./src",
+    "paths": {}
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }
 `);
+
+// --- ADD PATH ALIASES TO TSCONFIG.JSON ---
+const tsconfigPath = path.join(root, 'tsconfig.json');
+const tsconfigRaw = readFileSync(tsconfigPath, 'utf-8');
+const tsconfig = JSON.parse(tsconfigRaw);
+
+// Ensure paths field exists
+tsconfig.compilerOptions.paths = {
+  ...(tsconfig.compilerOptions.paths || {}),
+  "@utils/*": ["utils/*"],
+  "@configs/*": ["configs/*"],
+  "@modules/*": ["modules/*"],
+  "@types/*": ["types/*"]
+};
+
+// Rewrite tsconfig.json
+write(tsconfigPath, JSON.stringify(tsconfig, null, 2));
+
+
+// --- ADD _moduleAliases TO PACKAGE.JSON ---
+packageData._moduleAliases = {
+  ...(packageData._moduleAliases || {}),
+  "@utils": "dist/utils",
+  "@configs": "dist/configs",
+  "@modules": "dist/modules",
+  "@types": "dist/types"
+};
+
+write(packageJsonPath, JSON.stringify(packageData, null, 2));
+
 
   // Creating environment variable file
 console.log("📄 Creating .env file...");
@@ -109,8 +143,8 @@ ${projectName} scaffolded by JK SCAFFOLDER
     import express, { Request, Response } from 'express';
   import cors from 'cors';
   import cookieParser from 'cookie-parser';
-  import connectToDB from './configs/db.ts'
-  import checkEnvVars from './utils/checkEnv.ts'
+  import connectToDB from '@configs/db.ts'
+  import checkEnvVars from '@utils/checkEnv.ts'
 
 const app = express();
 
@@ -141,7 +175,6 @@ res.send('Server up and running')
 })
 
 app.use('/api/auth', authRouter)
-
 `
 )
 ;
