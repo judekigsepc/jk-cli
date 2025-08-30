@@ -43,7 +43,7 @@ const packageData = JSON.parse(rawPackageJson);
 // Inject scripts
 packageData.scripts = {
   ...packageData.scripts,
-  dev: "ts-node-dev --respawn --transpile-only --env-file .env src/app.ts",
+  dev: "ts-node-dev --respawn --transpile-only --env-file .env -r tsconfig-paths/register src/app.ts",
   build: "tsc",
   start: "node dist/app.js",
   "type-check": "tsc --noEmit"
