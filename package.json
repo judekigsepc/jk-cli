@@ -5,7 +5,7 @@
     "jk": "./dist/bin/index.js"
   },
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only --env-file .env -r tsconfig-paths/register src/app.ts",
+    "dev": "ts-node-dev --respawn bin/index.ts",
     "build": "tsc"
   },
   "dependencies": {
